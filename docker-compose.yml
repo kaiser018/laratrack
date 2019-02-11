@@ -4,15 +4,16 @@ services:
   laratrack_nginx:
     build: ./nginx
     links:
+      - laratrack_web
       - laratrack_socket
     ports:
-     - "3001:80"
+     - "8081:80"
   laratrack_web:
     build: ./
     volumes:
       - ./:/var/www/html
-    ports:
-      - '80:80'
+    expose:
+      - '80'
   laratrack_socket:
     build: ./websocket
     volumes:
