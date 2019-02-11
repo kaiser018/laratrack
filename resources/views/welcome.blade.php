@@ -278,7 +278,7 @@
                     },
                     on: function(event, callback) {
                         socket.on(this.channel + '|' + event, callback);
-                    }
+                    },
                     unsubscribe: function {
                         socket.emit('unsubscribe', this.channel);
                     }
