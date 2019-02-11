@@ -7,7 +7,7 @@ services:
       - laratrack_web
       - laratrack_socket
     ports:
-     - "8081:80"
+     - "80:80"
   laratrack_web:
     build: ./
     volumes:
