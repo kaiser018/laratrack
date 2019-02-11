@@ -109,14 +109,15 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script> -->
     <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script> -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7lXjylSBj-Gcr3NFWBh578Rw2hthELqo"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{env('GOOGLEMAPS_KEY')}}"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
-
-
 
     <script type="text/javascript">
 
-        var socket = io.connect("http://127.0.0.1:3000", {transports:['websocket'], upgrade:false});
+        const socket = io.connect(window.location.hostname + ':3000', {
+            transports: ['websocket'], 
+            upgrade: false
+        });
 
         $(function() {
 
@@ -267,7 +268,9 @@
 
                 socket.emit('subscribe', channel);
 
-                if (callback) callback();
+                if (callback) {
+                    socket.on(this.channel + '|subscribe', callback);
+                }
 
                 return {
                     channel: channel,
@@ -279,8 +282,11 @@
                     on: function(event, callback) {
                         socket.on(this.channel + '|' + event, callback);
                     },
-                    unsubscribe: function() {
+                    unsubscribe: function(callback) {
                         socket.emit('unsubscribe', this.channel);
+                        if (callback) {
+                            socket.on(this.channel + '|unsubscribe', callback);
+                        }
                     }
                 };
             }

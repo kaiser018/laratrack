@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  web:
+    build: ./
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - '8086:80'
+  socket:
+    build: ./websocket
+    volumes:
+      - ./websocket/:/usr/src/app
+    restart: always
+    ports:
+      - '3000:3000'
+    links:
+      - redis
+  redis:
+    image: redis:alpine
+    restart: always
+    expose:
+      - '6379'
