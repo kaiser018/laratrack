@@ -3,8 +3,6 @@ version: '3'
 services:
   laratrack_web:
     build: ./
-    volumes:
-      - ./:/var/www/html
     ports:
       - '80:80'
   laratrack_socket:
@@ -13,7 +11,7 @@ services:
       - ./websocket/:/usr/src/app
     restart: always
     ports:
-      - '3000:3000'
+      - '3001:3000'
     links:
       - laratrack_redis
   laratrack_redis:

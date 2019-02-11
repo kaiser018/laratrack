@@ -114,7 +114,7 @@
 
     <script type="text/javascript">
 
-        const socket = io.connect(window.location.hostname + ':3000', {
+        const socket = io.connect(window.location.hostname + ':3001', {
             transports: ['websocket'], 
             upgrade: false
         });
