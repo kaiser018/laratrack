@@ -6,7 +6,7 @@ services:
     volumes:
       - ./:/var/www/html
     ports:
-      - '8086:80'
+      - '80:80'
   laratrack_socket:
     build: ./websocket
     volumes:
