@@ -279,7 +279,7 @@
                     on: function(event, callback) {
                         socket.on(this.channel + '|' + event, callback);
                     },
-                    unsubscribe: function {
+                    unsubscribe: function() {
                         socket.emit('unsubscribe', this.channel);
                     }
                 };
