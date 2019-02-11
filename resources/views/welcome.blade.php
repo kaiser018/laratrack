@@ -270,7 +270,7 @@
                 socket.emit('subscribe', channel);
 
                 if (callback) {
-                    socket.on(this.channel + '|subscribe', callback);
+                    socket.on(channel + '|subscribe', callback);
                 }
 
                 return {
