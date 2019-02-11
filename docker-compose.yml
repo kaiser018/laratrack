@@ -1,13 +1,13 @@
 version: '3'
 
 services:
-  web:
+  laratrack_web:
     build: ./
     volumes:
       - ./:/var/www/html
     ports:
       - '8086:80'
-  socket:
+  laratrack_socket:
     build: ./websocket
     volumes:
       - ./websocket/:/usr/src/app
@@ -15,8 +15,8 @@ services:
     ports:
       - '3000:3000'
     links:
-      - redis
-  redis:
+      - laratrack_redis
+  laratrack_redis:
     image: redis:alpine
     restart: always
     expose:

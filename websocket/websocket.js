@@ -5,7 +5,7 @@ var io 			= require('socket.io').listen(server);
 var redis 		= require('socket.io-redis');
 var port 		= process.env.PORT || 3000;
 
-io.adapter(redis({ host: 'redis', port: 6379 }));
+io.adapter(redis({ host: 'laratrack_redis', port: 6379 }));
 
 server.listen(port, function() {
   console.log('Server listening at port %d', port);
