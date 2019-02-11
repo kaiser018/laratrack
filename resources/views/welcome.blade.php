@@ -235,7 +235,7 @@
             function showDeliveryHeroOnMap (deliveryHeroName, center, addMarker, prevLocation) {
 
                 if (!deliveryHeroesLocationMap[deliveryHeroName]) return;
-                
+
                 // first center the map
                 if (center) map.setCenter(deliveryHeroesLocationMap[deliveryHeroName]);
                 var nextLocation = deliveryHeroesLocationMap[deliveryHeroName];
@@ -272,10 +272,15 @@
                 return {
                     channel: channel,
                     emit: function(event, data) {
-                        socket.emit('channel', {channel: channel, event: event, data: data});
+                        if (data) {
+                            socket.emit('channel', {channel: this.channel, event: event, data: data});
+                        }
                     },
                     on: function(event, callback) {
-                        socket.on(event, callback);
+                        socket.on(this.channel + '|' + event, callback);
+                    }
+                    unsubscribe: function {
+                        socket.emit('unsubscribe', this.channel);
                     }
                 };
             }
